@@ -59,3 +59,54 @@ Email, senha: Senha });
       }
   });
 });  
+
+/* POST ONE users. */
+router.post('/users/', function (req, res, next) {
+  var db = require('../db');
+  var User = db.Mongoose.model('usercollection', db.UserSchema,
+'usercollection');
+  var newuser = new User({ username: req.body.name, email:
+req.body.email });
+  newuser.save(function (err) {
+      if (err) {
+          res.status(500).json({ error: err.message });
+          res.end();
+          return;
+      }
+      res.json(newuser);
+      res.end();
+  });
+});
+
+/* PUT ONE user. */
+router.put('/users/:id', function (req, res, next) {
+  var db = require('../db');
+  var User = db.Mongoose.model('usercollection', db.UserSchema,
+'usercollection');
+  User.findOneAndUpdate({ _id: req.params.id }, req.body,
+{ upsert: true }, function (err, doc) {
+      if (err) {
+          res.status(500).json({ error: err.message });
+          res.end();
+          return;
+      }
+      res.json(req.body);
+      res.end();
+  });
+});
+
+/* DELETE ONE user. */
+router.delete('/users/:id', function (req, res, next) {
+  var db = require('../db');
+  var User = db.Mongoose.model('usercollection',
+db.UserSchema, 'usercollection');
+  User.find({ _id: req.params.id }).remove(function (err) {
+      if (err) {
+          res.status(500).json({ error: err.message });
+          res.end();
+          return;
+      }
+      res.json({success: true});
+      res.end();
+  });
+});
