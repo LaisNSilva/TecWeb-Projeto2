@@ -52,10 +52,10 @@ router.post('/login', function (req, res) {
         senha: userSenha
     });
 
-    Users.find({ user }, (err, users) => {
+    Users.find({ "username": userName, "senha": userSenha }, (err, users) => {
         if (users.length) {
             // there are user(s)
-            res.json({ success: true });
+            res.json({ success: true, id: user._id });
             res.end();
 
         } else {
