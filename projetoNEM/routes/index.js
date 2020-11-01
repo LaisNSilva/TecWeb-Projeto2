@@ -39,28 +39,25 @@ router.post('/adduser', function (req, res) {
     });
 });
 
-router.post('/login', function (req, res) {
+router.post('/login', async function (req, res) {
     var db = require("../db");
-    var Users = db.Mongoose.model('usercollection', db.UserSchema,
+
+    var Users = await db.Mongoose.model('usercollection', db.UserSchema,
         'usercollection');
 
     var userName = req.body.username;
     var userSenha = req.body.senha;
 
-    var user = new Users({
-        username: userName,
-        senha: userSenha
-    });
-
-    Users.find({ "username": userName, "senha": userSenha }, (err, users) => {
+    await Users.find({ "username": userName, "senha": userSenha }, (err, users) => {
         if (users.length) {
             // there are user(s)
-            res.json({ success: true, id: user._id });
+
+            res.json(users);
             res.end();
 
         } else {
             // there are no users
-            res.json({ success: false });
+            res.json();
             res.end();
         }
     });
