@@ -17,15 +17,17 @@ router.get('/newuser', function (req, res) {
 /* POST to Add User Service */
 router.post('/adduser', function (req, res) {
     var db = require("../db");
+
+    console.log(req.body)
     var Name = req.body.name;
     var userName = req.body.username;
     var Email = req.body.email;
-    var senha = req.body.senha;
+    var Senha = req.body.senha;
+
     var Users = db.Mongoose.model('usercollection', db.UserSchema,
         'usercollection');
     var user = new Users({
-        name: Name, username: userName, email:
-            Email, senha: Senha
+        name: Name, username: userName, email: Email, senha: Senha
     });
     user.save(function (err) {
         if (err) {
@@ -34,7 +36,7 @@ router.post('/adduser', function (req, res) {
         }
         else {
             console.log("Post saved");
-            res.redirect("userlist");
+            
         }
     });
 });
