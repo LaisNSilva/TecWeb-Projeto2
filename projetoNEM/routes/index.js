@@ -17,24 +17,26 @@ router.get('/newuser', function (req, res) {
 /* POST to Add User Service */
 router.post('/adduser', function (req, res) {
     var db = require("../db");
+
+    console.log(req.body)
     var Name = req.body.name;
     var userName = req.body.username;
     var Email = req.body.email;
-    var senha = req.body.senha;
+    var Senha = req.body.senha;
+
     var Users = db.Mongoose.model('usercollection', db.UserSchema,
         'usercollection');
     var user = new Users({
-        name: Name, username: userName, email:
-            Email, senha: Senha
+        name: Name, username: userName, email: Email, senha: Senha
     });
-    user.save(function (err) {
+    Users.save(function (err) {
         if (err) {
             console.log("Error! " + err.message);
             return err;
         }
         else {
             console.log("Post saved");
-            res.redirect("userlist");
+            
         }
     });
 });
@@ -62,3 +64,24 @@ router.post('/login', async function (req, res) {
         }
     });
 });
+
+router.post('/preferencias', async function(req, res){
+    var db = require("../db");
+
+    console.log("REQ ", req.body)
+
+    var usuario = req.body.nome
+
+    var novas_preferencias = req.body.preferencias
+
+    var query = await db.Mongoose.model('usercollection', db.UserSchema,
+        'usercollection').update({username : usuario}, {$set: {preferencias: novas_preferencias}}).lean()
+
+    res.json()
+    res.end()
+
+    
+})
+
+
+
