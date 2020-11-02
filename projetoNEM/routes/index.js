@@ -29,7 +29,7 @@ router.post('/adduser', function (req, res) {
     var user = new Users({
         name: Name, username: userName, email: Email, senha: Senha
     });
-    user.save(function (err) {
+    Users.save(function (err) {
         if (err) {
             console.log("Error! " + err.message);
             return err;
@@ -64,3 +64,6 @@ router.post('/login', async function (req, res) {
         }
     });
 });
+
+
+
