@@ -29,13 +29,16 @@ router.post('/adduser', function (req, res) {
     var user = new Users({
         name: Name, username: userName, email: Email, senha: Senha
     });
-    Users.save(function (err) {
+    console.log(user)
+    
+    user.save(function (err) {
         if (err) {
             console.log("Error! " + err.message);
             return err;
         }
         else {
             console.log("Post saved");
+            
             
         }
     });
