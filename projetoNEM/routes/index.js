@@ -154,11 +154,16 @@ router.get('/home', function (req, res) {
     
     while (i < produtos.length) {
         var json = {};
+
         var price = produtos[i].price.current_price;
+        var desconto = produtos[i].price.savings_percent;
         var title = produtos[i].title;
         var link = produtos[i].url;
         var image = produtos[i].thumbnail;
+        var pontuacao = produtos[i].score;
 
+        json.pontuacao = pontuacao
+        json.desconto = desconto
         json.price = price;
         json.title = title;
         json.link = link;
