@@ -181,3 +181,69 @@ router.get('/home', function (req, res) {
 
 
 });
+
+router.get('/busca', function (req, res) {
+
+    console.log(req.body.keyword)
+    var busca = req.body.keyword
+
+
+    /*
+    var axios = require("axios").default;
+
+    
+    var options = {
+        method: 'GET',
+        url: 'https://rapidapi.p.rapidapi.com/product/search',
+        params: { keyword: busca,  country: 'US' },
+        headers: {
+            'x-rapidapi-key': '84721fb234msha6f8550a10782b7p1b20b4jsn1e0cbde5d09e',
+            'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
+        }
+    };
+
+    axios.request(options).then(function (response) {
+        var produtos = response.data.products
+        console.log(response.data.products);
+
+    */    
+    
+    
+
+    var json_geral = []
+    var i = 0;
+    
+    while (i < produtos.length) {
+        var json = {};
+        var price = produtos[i].price.current_price;
+        var title = produtos[i].title;
+        var link = produtos[i].url;
+        var image = produtos[i].thumbnail;
+
+        json.price = price;
+        json.title = title;
+        json.link = link;
+        json.image = image;
+        json_geral.push(json);
+        i++
+
+    }
+
+    console.log("-----------",json_geral)
+
+    res.json(json_geral);
+    res.end();
+
+
+});
+
+/*
+.catch(function (error) {
+    console.error(error);
+
+});
+
+
+//});
+
+*/
