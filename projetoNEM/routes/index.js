@@ -261,7 +261,7 @@ router.post('/busca', function (req, res) {
 router.post('/produto', function (req, res) {
 
     console.log(req.body.id)
-    var produto = req.body.id
+    var idProduto = req.body.id
 
 
     /*
@@ -270,7 +270,7 @@ router.post('/produto', function (req, res) {
     var options = {
     method: 'GET',
     url: 'https://amazon-product-reviews-keywords.p.rapidapi.com/product/details',
-    params: {asin: produto 'B07ZPKR714', country: 'US'},
+    params: {asin: idProduto, country: 'US'},
     headers: {
         'x-rapidapi-key': '84721fb234msha6f8550a10782b7p1b20b4jsn1e0cbde5d09e',
         'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
@@ -282,17 +282,17 @@ router.post('/produto', function (req, res) {
         console.log(response.data.product);
         
 
-    */
-
+    
+   
 
     var json_geral = []
     
-    /*
+    
     
         var json = {};
         var title = produto.title;
         var description = produto.description;
-        var recursos = produto.features_bullets
+        var recursos = produto.feature_bullets
         var link = produto.url;
         var price = produto.price.current_price;
         var image = produto.images;
@@ -308,10 +308,40 @@ router.post('/produto', function (req, res) {
     */
 
 
+   var json_produto =  [
+    {
+      price: 349,
+      title: 'New Total Wireless Prepaid - Apple iPhone SE (64GB) - White [Locked to Carrier – Total Wireless] (MX9P2LL/A-TF)',
+      description: '',
+      recursos: [
+        'Carrier - This phone is locked to Total Wireless from Tracfone, which means this device can only be used on the total wireless network.',
+        "Plans – Total wireless offers a variety of coverage plans, including 30-day unlimited talk, text & data. Get the Nationwide coverage you need on America's largest, most dependable 4G LTE network. For more information or plan options, please visit the Total Wireless website.",
+        'Activation - You’ll receive a total wireless SIM kit with this iPhone. Follow the instructions to get service activated with the total wireless plan of your choice.',
+        '4.7-inch retina HD display',
+        'Water and dust resistant (1 meter for up to 30 minutes, IP67)',
+        '12MP wide camera; portrait mode, portrait lighting, depth control, next-generation smart HDR, and 4K video',
+        '7MP front camera with Portrait mode, Portrait Lighting, and Depth Control',
+        'Touch ID for secure authentication and Apple Pay',
+        'A13 Bionic chip with third-generation Neural Engine',
+        'Fast-charge capable'
+      ],
+      link: 'https://www.amazon.com/dp/B0875GQSL1',
+      image: [
+        'https://images-na.ssl-images-amazon.com/images/I/41arEqjjJwL._AC_SY879_.jpg',
+        'https://images-na.ssl-images-amazon.com/images/I/21Gz4PDjbKL._AC_SY879_.jpg',
+        'https://images-na.ssl-images-amazon.com/images/I/31oW6N1OgUL._AC_SY879_.jpg',
+        'https://images-na.ssl-images-amazon.com/images/I/41queeRsPYL._AC_SY879_.jpg',
+        'https://images-na.ssl-images-amazon.com/images/I/31evhbbON2L._AC_SY879_.jpg',
+        'https://images-na.ssl-images-amazon.com/images/I/51d-akHdY7L._AC_SY879_.jpg',
+        'https://m.media-amazon.com/images/I/31t1oAK-KhL._AC_SY879_.jpg'
+      ]
+    }
+  ]
 
-    console.log("-----------", json_geral)
 
-    res.json(json_geral);
+    console.log("-----------", json_produto)
+
+    res.json(json_produto);
     res.end();
 
 
@@ -324,9 +354,11 @@ router.post('/produto', function (req, res) {
 });
 
 
-//});
+});
 
 */
+
+
 
 
 
