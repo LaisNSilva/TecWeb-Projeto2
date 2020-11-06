@@ -285,7 +285,7 @@ router.post('/produto', function (req, res) {
     
    
 
-    var json_geral = []
+    var json_produtos = []
     
     
     
@@ -303,7 +303,7 @@ router.post('/produto', function (req, res) {
         json.recursos = recursos;
         json.link = link;
         json.image = image;
-        json_geral.push(json);
+        json_produto.push(json);
        
     */
 
@@ -357,6 +357,89 @@ router.post('/produto', function (req, res) {
 });
 
 */
+
+
+
+router.post('/avaliacao', function (req, res) {
+
+    console.log(req.body.id)
+    var idProduto = req.body.id
+
+
+    /*
+    var axios = require("axios").default;
+
+    var options = {
+    method: 'GET',
+    url: 'https://amazon-product-reviews-keywords.p.rapidapi.com/product/reviews',
+    params: {asin: idProduto, variants: '1', country: 'US'},
+    headers: {
+        'x-rapidapi-key': '84721fb234msha6f8550a10782b7p1b20b4jsn1e0cbde5d09e',
+        'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
+    }
+    };
+
+    axios.request(options).then(function (response) {
+        var reviews = response.data.reviews
+        console.log(response.data.reviews);
+        
+
+    
+   
+
+    var json_avaliacao = []
+    
+    var i = 0;
+
+    while (i < reviews.length) {
+    
+        var json = {};
+        var data = reviews[i].review_data;
+        var nome = reviews[i].name;
+        var nota = reviews[i].rating;
+        var title = reviews[i].title;
+        var comentario = reviews[i].review;
+        
+
+        json.data = data;
+        json.nome = nome;
+        json.nota = nota;
+        json.title = title;
+        json.comentario = comentario;
+        json_produto.push(json);
+
+    }
+       
+    */
+
+
+   
+
+
+    console.log("-----------", json_avaliacao)
+
+    res.json(json_avaliacao);
+    res.end();
+
+
+});
+
+/*
+
+.catch(function (error) {
+    console.error(error);
+
+});
+
+});
+*/
+
+
+
+
+
+
+
 
 
 
