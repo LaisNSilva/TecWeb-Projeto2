@@ -1,5 +1,8 @@
+const { response } = require('express');
 var express = require('express');
 var router = express.Router();
+
+// "bf088c4c77msh95f3011b4369a45p1ac6f0jsn58e57241eca0"
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -83,75 +86,95 @@ router.post('/preferencias', async function (req, res) {
 })
 // --------------------------------------------------------------------------------
 // o que lais fez dia 03/11
-router.get('/home', function (req, res) {
+router.post('/home', async function (req, res) {
 
-    //var axios = require("axios").default;
+    function randomArrayShuffle(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+        while (0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
+    }
 
-    /*
+    var preferencias = req.body.preferencias
+
+    preferencias = randomArrayShuffle(preferencias)
+
+    var categoria = preferencias[0]
+
+    console.log("CATEGORIA", categoria)
+
+    var axios = require("axios").default;
+
     var options = {
         method: 'GET',
         url: 'https://rapidapi.p.rapidapi.com/product/search',
-        params: { keyword: 'iphone', page: '1', category: 'aps', country: 'US' },
+        params: { keyword: "'"+categoria+"'", page: '1', category: "'"+categoria+"'", country: 'US' },
         headers: {
-            'x-rapidapi-key': '84721fb234msha6f8550a10782b7p1b20b4jsn1e0cbde5d09e',
+            'x-rapidapi-key': 'bf088c4c77msh95f3011b4369a45p1ac6f0jsn58e57241eca0',
             'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
         }
     };
 
-    axios.request(options).then(function (response) {
+    await axios.request(options).then(function (response) {
         console.log(response.data);
     }).catch(function (error) {
         console.error(error);
 
     });
-    */
 
-   var produtos = [{
-    position: { page: 1, position: 24, global_position: 23 },
-    asin: 'B0875GQSL1',
-    price: {
-      discounted: false,
-      current_price: 349,
-      currency: 'USD',
-      before_price: 0,
-      savings_amount: 0,
-      savings_percent: 0
-    },
-    reviews: { total_reviews: 23, rating: 2.1 },
-    url: 'https://www.amazon.com/dp/B0875GQSL1',
-    score: '48.30',
-    sponsored: false,
-    amazonChoice: false,
-    bestSeller: false,
-    amazonPrime: true,
-    title: 'New Total Wireless Prepaid - Apple iPhone SE (64GB) - White [Locked to Carrier – Total Wireless] (MX9P2LL/A-TF)',
-    thumbnail: 'https://m.media-amazon.com/images/I/81UhYiZH98L._AC_UY218_.jpg'
-  },
-  {
-    position: { page: 1, position: 20, global_position: 19 },
-    asin: 'B07YMFYTYY',
-    price: {
-      discounted: true,
-      current_price: 741.65,
-      currency: 'USD',
-      before_price: 899,
-      savings_amount: 157.35,
-      savings_percent: 17.5
-    },
-    reviews: { total_reviews: 268, rating: 4.5 },
-    url: 'https://www.amazon.com/dp/B07YMFYTYY',
-    score: '1206.00',
-    sponsored: false,
-    amazonChoice: false,
-    bestSeller: false,
-    amazonPrime: true,
-    title: 'Google Pixel 4 XL - Clearly White - 64GB - Unlocked',
-    thumbnail: 'https://m.media-amazon.com/images/I/71oTy+incwL._AC_UY218_.jpg'
-  }]
+    var produtos = response.data
+
+    // var produtos = [{
+    //     position: { page: 1, position: 24, global_position: 23 },
+    //     asin: 'B0875GQSL1',
+    //     price: {
+    //         discounted: false,
+    //         current_price: 349,
+    //         currency: 'USD',
+    //         before_price: 0,
+    //         savings_amount: 0,
+    //         savings_percent: 0
+    //     },
+    //     reviews: { total_reviews: 23, rating: 2.1 },
+    //     url: 'https://www.amazon.com/dp/B0875GQSL1',
+    //     score: '48.30',
+    //     sponsored: false,
+    //     amazonChoice: false,
+    //     bestSeller: false,
+    //     amazonPrime: true,
+    //     title: 'New Total Wireless Prepaid - Apple iPhone SE (64GB) - White [Locked to Carrier – Total Wireless] (MX9P2LL/A-TF)',
+    //     thumbnail: 'https://m.media-amazon.com/images/I/81UhYiZH98L._AC_UY218_.jpg'
+    // },
+    // {
+    //     position: { page: 1, position: 20, global_position: 19 },
+    //     asin: 'B07YMFYTYY',
+    //     price: {
+    //         discounted: true,
+    //         current_price: 741.65,
+    //         currency: 'USD',
+    //         before_price: 899,
+    //         savings_amount: 157.35,
+    //         savings_percent: 17.5
+    //     },
+    //     reviews: { total_reviews: 268, rating: 4.5 },
+    //     url: 'https://www.amazon.com/dp/B07YMFYTYY',
+    //     score: '1206.00',
+    //     sponsored: false,
+    //     amazonChoice: false,
+    //     bestSeller: false,
+    //     amazonPrime: true,
+    //     title: 'Google Pixel 4 XL - Clearly White - 64GB - Unlocked',
+    //     thumbnail: 'https://m.media-amazon.com/images/I/71oTy+incwL._AC_UY218_.jpg'
+    // }]
 
     var json_geral = []
     var i = 0;
-    
+
     while (i < produtos.length) {
         var json = {};
 
@@ -173,7 +196,7 @@ router.get('/home', function (req, res) {
 
     }
 
-    console.log("-----------",json_geral)
+    console.log("-----------", json_geral)
 
     res.json(json_geral);
     res.end();
@@ -206,13 +229,13 @@ router.get('/busca', function (req, res) {
         var produtos = response.data.products
         console.log(response.data.products);
 
-    */    
-    
-    
+    */
+
+
 
     var json_geral = []
     var i = 0;
-    
+
     while (i < produtos.length) {
         var json = {};
         var price = produtos[i].price.current_price;
@@ -229,7 +252,7 @@ router.get('/busca', function (req, res) {
 
     }
 
-    console.log("-----------",json_geral)
+    console.log("-----------", json_geral)
 
     res.json(json_geral);
     res.end();
