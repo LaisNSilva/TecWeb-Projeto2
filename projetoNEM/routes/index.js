@@ -111,149 +111,61 @@ router.post('/home', async function (req, res) {
     var axios = require("axios").default;
 
     var options = {
+
         method: 'GET',
-        url: 'https://rapidapi.p.rapidapi.com/product/search',
-        params: { keyword: "'"+categoria+"'", page: '1', category: "'"+categoria+"'", country: 'US' },
+        url: 'https://amazon-product-reviews-keywords.p.rapidapi.com/product/search',
+        params: { keyword: categoria, page: '1', country: 'US' },
         headers: {
-            'x-rapidapi-key': 'bf088c4c77msh95f3011b4369a45p1ac6f0jsn58e57241eca0',
+            'x-rapidapi-key': 'f972178a92mshabcc320693634b2p170152jsn6deca87ed049',
             'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
         }
     };
 
     await axios.request(options).then(function (response) {
-        console.log(response.data);
+        //console.log(response.data);
+
+        var produtos = response.data.products
+
+   
+
+        var json_geral = []
+        var i = 0;
+    
+        while (i < produtos.length) {
+            var json = {};
+    
+            var price = produtos[i].price.current_price;
+            var desconto = produtos[i].price.savings_percent;
+            var title = produtos[i].title;
+            var link = produtos[i].url;
+            var image = produtos[i].thumbnail;
+            var pontuacao = produtos[i].score;
+            var id = produtos[i].asin;
+    
+            json.pontuacao = pontuacao
+            json.desconto = desconto
+            json.price = price;
+            json.title = title;
+            json.link = link;
+            json.image = image;
+            json.id = id;
+            json_geral.push(json);
+            i++
+    
+        }
+        //console.log("-----------", json_geral)
+    
+        res.json(json_geral);
+        res.end();
+    
+
+
     }).catch(function (error) {
         console.error(error);
 
     });
 
-<<<<<<< HEAD
-    var produtos = response.data
-
-    // var produtos = [{
-    //     position: { page: 1, position: 24, global_position: 23 },
-    //     asin: 'B0875GQSL1',
-    //     price: {
-    //         discounted: false,
-    //         current_price: 349,
-    //         currency: 'USD',
-    //         before_price: 0,
-    //         savings_amount: 0,
-    //         savings_percent: 0
-    //     },
-    //     reviews: { total_reviews: 23, rating: 2.1 },
-    //     url: 'https://www.amazon.com/dp/B0875GQSL1',
-    //     score: '48.30',
-    //     sponsored: false,
-    //     amazonChoice: false,
-    //     bestSeller: false,
-    //     amazonPrime: true,
-    //     title: 'New Total Wireless Prepaid - Apple iPhone SE (64GB) - White [Locked to Carrier – Total Wireless] (MX9P2LL/A-TF)',
-    //     thumbnail: 'https://m.media-amazon.com/images/I/81UhYiZH98L._AC_UY218_.jpg'
-    // },
-    // {
-    //     position: { page: 1, position: 20, global_position: 19 },
-    //     asin: 'B07YMFYTYY',
-    //     price: {
-    //         discounted: true,
-    //         current_price: 741.65,
-    //         currency: 'USD',
-    //         before_price: 899,
-    //         savings_amount: 157.35,
-    //         savings_percent: 17.5
-    //     },
-    //     reviews: { total_reviews: 268, rating: 4.5 },
-    //     url: 'https://www.amazon.com/dp/B07YMFYTYY',
-    //     score: '1206.00',
-    //     sponsored: false,
-    //     amazonChoice: false,
-    //     bestSeller: false,
-    //     amazonPrime: true,
-    //     title: 'Google Pixel 4 XL - Clearly White - 64GB - Unlocked',
-    //     thumbnail: 'https://m.media-amazon.com/images/I/71oTy+incwL._AC_UY218_.jpg'
-    // }]
-=======
-    var produtos = [{
-        position: { page: 1, position: 24, global_position: 23 },
-        asin: 'B0875GQSL1',
-        price: {
-            discounted: false,
-            current_price: 349,
-            currency: 'USD',
-            before_price: 0,
-            savings_amount: 0,
-            savings_percent: 0
-        },
-        reviews: { total_reviews: 23, rating: 2.1 },
-        url: 'https://www.amazon.com/dp/B0875GQSL1',
-        score: '48.30',
-        sponsored: false,
-        amazonChoice: false,
-        bestSeller: false,
-        amazonPrime: true,
-        title: 'New Total Wireless Prepaid - Apple iPhone SE (64GB) - White [Locked to Carrier – Total Wireless] (MX9P2LL/A-TF)',
-        thumbnail: 'https://m.media-amazon.com/images/I/81UhYiZH98L._AC_UY218_.jpg'
-    },
-    {
-        position: { page: 1, position: 20, global_position: 19 },
-        asin: 'B07YMFYTYY',
-        price: {
-            discounted: true,
-            current_price: 741.65,
-            currency: 'USD',
-            before_price: 899,
-            savings_amount: 157.35,
-            savings_percent: 17.5
-        },
-        reviews: { total_reviews: 268, rating: 4.5 },
-        url: 'https://www.amazon.com/dp/B07YMFYTYY',
-        score: '1206.00',
-        sponsored: false,
-        amazonChoice: false,
-        bestSeller: false,
-        amazonPrime: true,
-        title: 'Google Pixel 4 XL - Clearly White - 64GB - Unlocked',
-        thumbnail: 'https://m.media-amazon.com/images/I/71oTy+incwL._AC_UY218_.jpg'
-    }]
->>>>>>> 0a016ff91771bd7fd2ba035d1fd566db261c3e2e
-
-    var json_geral = []
-    var i = 0;
-
-    while (i < produtos.length) {
-        var json = {};
-
-        var price = produtos[i].price.current_price;
-        var desconto = produtos[i].price.savings_percent;
-        var title = produtos[i].title;
-        var link = produtos[i].url;
-        var image = produtos[i].thumbnail;
-        var pontuacao = produtos[i].score;
-        var id = produtos[i].asin;
-
-        json.pontuacao = pontuacao
-        json.desconto = desconto
-        json.price = price;
-        json.title = title;
-        json.link = link;
-        json.image = image;
-        json.id = id;
-        json_geral.push(json);
-        i++
-
-    }
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 0a016ff91771bd7fd2ba035d1fd566db261c3e2e
-    console.log("-----------", json_geral)
-
-    res.json(json_geral);
-    res.end();
-
-
+   
 
 });
 
@@ -264,16 +176,16 @@ router.post('/busca', function (req, res) {
     var busca = req.body.keyword
 
 
-    /*
+    
     var axios = require("axios").default;
 
     
     var options = {
         method: 'GET',
-        url: 'https://rapidapi.p.rapidapi.com/product/search',
+        url: 'https://amazon-product-reviews-keywords.p.rapidapi.com/product/search',
         params: { keyword: busca,  country: 'US' },
         headers: {
-            'x-rapidapi-key': '84721fb234msha6f8550a10782b7p1b20b4jsn1e0cbde5d09e',
+            'x-rapidapi-key': 'f972178a92mshabcc320693634b2p170152jsn6deca87ed049',
             'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
         }
     };
@@ -282,18 +194,15 @@ router.post('/busca', function (req, res) {
         var produtos = response.data.products
         console.log(response.data.products);
 
-    */
+    
 
 
 
     var json_geral = []
     var i = 0;
 
-<<<<<<< HEAD
-=======
 
-    /*
->>>>>>> 0a016ff91771bd7fd2ba035d1fd566db261c3e2e
+    
     while (i < produtos.length) {
         var json = {};
         var price = produtos[i].price.current_price;
@@ -309,31 +218,28 @@ router.post('/busca', function (req, res) {
         i++
 
     }
-    */
+    
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 0a016ff91771bd7fd2ba035d1fd566db261c3e2e
     console.log("-----------", json_geral)
 
     res.json(json_geral);
     res.end();
 
 
-});
+})
 
-/*
+
 .catch(function (error) {
     console.error(error);
 
 });
 
 
-//});
+});
 
-*/
+
 
 router.post('/produto', function (req, res) {
 
@@ -341,28 +247,29 @@ router.post('/produto', function (req, res) {
     var idProduto = req.body.id
 
 
-    /*
+    
     var axios = require("axios").default;
 
     var options = {
     method: 'GET',
     url: 'https://amazon-product-reviews-keywords.p.rapidapi.com/product/details',
     params: {asin: idProduto, country: 'US'},
+    
     headers: {
-        'x-rapidapi-key': '84721fb234msha6f8550a10782b7p1b20b4jsn1e0cbde5d09e',
+        'x-rapidapi-key': 'f972178a92mshabcc320693634b2p170152jsn6deca87ed049',
         'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
     }
     };
 
     axios.request(options).then(function (response) {
         var produto = response.data.product
-        console.log(response.data.product);
+        //console.log(response.data.product);
         
 
     
    
 
-    var json_produtos = []
+    var json_produto = []
     
     
     
@@ -382,49 +289,20 @@ router.post('/produto', function (req, res) {
         json.image = image;
         json_produto.push(json);
        
-    */
+    
+
+  
 
 
-   var json_produto =  [
-    {
-      price: 349,
-      title: 'New Total Wireless Prepaid - Apple iPhone SE (64GB) - White [Locked to Carrier – Total Wireless] (MX9P2LL/A-TF)',
-      description: '',
-      recursos: [
-        'Carrier - This phone is locked to Total Wireless from Tracfone, which means this device can only be used on the total wireless network.',
-        "Plans – Total wireless offers a variety of coverage plans, including 30-day unlimited talk, text & data. Get the Nationwide coverage you need on America's largest, most dependable 4G LTE network. For more information or plan options, please visit the Total Wireless website.",
-        'Activation - You’ll receive a total wireless SIM kit with this iPhone. Follow the instructions to get service activated with the total wireless plan of your choice.',
-        '4.7-inch retina HD display',
-        'Water and dust resistant (1 meter for up to 30 minutes, IP67)',
-        '12MP wide camera; portrait mode, portrait lighting, depth control, next-generation smart HDR, and 4K video',
-        '7MP front camera with Portrait mode, Portrait Lighting, and Depth Control',
-        'Touch ID for secure authentication and Apple Pay',
-        'A13 Bionic chip with third-generation Neural Engine',
-        'Fast-charge capable'
-      ],
-      link: 'https://www.amazon.com/dp/B0875GQSL1',
-      image: [
-        'https://images-na.ssl-images-amazon.com/images/I/41arEqjjJwL._AC_SY879_.jpg',
-        'https://images-na.ssl-images-amazon.com/images/I/21Gz4PDjbKL._AC_SY879_.jpg',
-        'https://images-na.ssl-images-amazon.com/images/I/31oW6N1OgUL._AC_SY879_.jpg',
-        'https://images-na.ssl-images-amazon.com/images/I/41queeRsPYL._AC_SY879_.jpg',
-        'https://images-na.ssl-images-amazon.com/images/I/31evhbbON2L._AC_SY879_.jpg',
-        'https://images-na.ssl-images-amazon.com/images/I/51d-akHdY7L._AC_SY879_.jpg',
-        'https://m.media-amazon.com/images/I/31t1oAK-KhL._AC_SY879_.jpg'
-      ]
-    }
-  ]
-
-
-    console.log("-----------", json_produto)
+    //console.log("-----------", json_produto)
 
     res.json(json_produto);
     res.end();
 
 
-});
+})
 
-/*
+
 .catch(function (error) {
     console.error(error);
 
@@ -433,7 +311,7 @@ router.post('/produto', function (req, res) {
 
 });
 
-*/
+
 
 
 
@@ -443,7 +321,7 @@ router.post('/avaliacao', function (req, res) {
     var idProduto = req.body.id
 
 
-    /*
+    
     var axios = require("axios").default;
 
     var options = {
@@ -451,15 +329,16 @@ router.post('/avaliacao', function (req, res) {
     url: 'https://amazon-product-reviews-keywords.p.rapidapi.com/product/reviews',
     params: {asin: idProduto, variants: '1', country: 'US'},
     headers: {
-        'x-rapidapi-key': '84721fb234msha6f8550a10782b7p1b20b4jsn1e0cbde5d09e',
+        'x-rapidapi-key': 'f972178a92mshabcc320693634b2p170152jsn6deca87ed049',
         'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
-    }
+      }
     };
 
     axios.request(options).then(function (response) {
         var reviews = response.data.reviews
         console.log(response.data.reviews);
-        
+    
+
 
     
    
@@ -483,11 +362,11 @@ router.post('/avaliacao', function (req, res) {
         json.nota = nota;
         json.title = title;
         json.comentario = comentario;
-        json_produto.push(json);
+        json_avaliacao.push(json);
 
     }
        
-    */
+    
 
 
    
@@ -499,9 +378,9 @@ router.post('/avaliacao', function (req, res) {
     res.end();
 
 
-});
+})
 
-/*
+
 
 .catch(function (error) {
     console.error(error);
@@ -509,7 +388,7 @@ router.post('/avaliacao', function (req, res) {
 });
 
 });
-*/
+
 
 
 
