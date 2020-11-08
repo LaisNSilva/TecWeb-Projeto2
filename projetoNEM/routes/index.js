@@ -116,9 +116,9 @@ router.post('/home', async function (req, res) {
         url: 'https://amazon-product-reviews-keywords.p.rapidapi.com/product/search',
         params: { keyword: categoria, page: '1', country: 'US' },
         headers: {
-            'x-rapidapi-key': 'f972178a92mshabcc320693634b2p170152jsn6deca87ed049',
+            'x-rapidapi-key': '2d6c4a71b3msh055ddb0b280a61dp17cc58jsnd6f10fd27a85',
             'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
-        }
+          }
     };
 
     await axios.request(options).then(function (response) {
@@ -185,9 +185,9 @@ router.post('/busca', function (req, res) {
         url: 'https://amazon-product-reviews-keywords.p.rapidapi.com/product/search',
         params: { keyword: busca,  country: 'US' },
         headers: {
-            'x-rapidapi-key': 'f972178a92mshabcc320693634b2p170152jsn6deca87ed049',
+            'x-rapidapi-key': '2d6c4a71b3msh055ddb0b280a61dp17cc58jsnd6f10fd27a85',
             'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
-        }
+          }
     };
 
     axios.request(options).then(function (response) {
@@ -209,11 +209,17 @@ router.post('/busca', function (req, res) {
         var title = produtos[i].title;
         var link = produtos[i].url;
         var image = produtos[i].thumbnail;
+        var desconto = produtos[i].price.savings_percent;
+        var pontuacao = produtos[i].score;
+        var id = produtos[i].asin;
 
+        json.pontuacao = pontuacao
+        json.desconto = desconto
         json.price = price;
         json.title = title;
         json.link = link;
         json.image = image;
+        json.id = id;
         json_geral.push(json);
         i++
 
@@ -256,9 +262,9 @@ router.post('/produto', function (req, res) {
     params: {asin: idProduto, country: 'US'},
     
     headers: {
-        'x-rapidapi-key': 'f972178a92mshabcc320693634b2p170152jsn6deca87ed049',
+        'x-rapidapi-key': '2d6c4a71b3msh055ddb0b280a61dp17cc58jsnd6f10fd27a85',
         'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
-    }
+      }
     };
 
     axios.request(options).then(function (response) {
@@ -280,6 +286,7 @@ router.post('/produto', function (req, res) {
         var link = produto.url;
         var price = produto.price.current_price;
         var image = produto.images;
+
 
         json.price = price;
         json.title = title;
@@ -329,7 +336,7 @@ router.post('/avaliacao', function (req, res) {
     url: 'https://amazon-product-reviews-keywords.p.rapidapi.com/product/reviews',
     params: {asin: idProduto, variants: '1', country: 'US'},
     headers: {
-        'x-rapidapi-key': 'f972178a92mshabcc320693634b2p170152jsn6deca87ed049',
+        'x-rapidapi-key': '2d6c4a71b3msh055ddb0b280a61dp17cc58jsnd6f10fd27a85',
         'x-rapidapi-host': 'amazon-product-reviews-keywords.p.rapidapi.com'
       }
     };
@@ -368,8 +375,6 @@ router.post('/avaliacao', function (req, res) {
        
     
 
-
-   
 
 
     console.log("-----------", json_avaliacao)
