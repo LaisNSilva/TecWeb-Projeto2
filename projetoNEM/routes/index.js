@@ -4,7 +4,7 @@ if(process.env.NODE_ENV !== 'production') {
 }
 const bodyParser = require('body-parser')
 
-const port = process.env.PORT || 3003
+const port = process.env.PORT || 3000
 const server = express()
 // Vamos precisar do body-parser para fazer o parsing do body das requisições da API
 server.use(bodyParser.urlencoded({ extended: true }))
