@@ -1,3 +1,20 @@
+// O Heroku não irá utilizar o dotenv, então incluímos para usar só localmente
+if(process.env.NODE_ENV !== 'production') {
+ require('dotenv').config();
+}
+const bodyParser = require('body-parser')
+
+const port = process.env.PORT || 3003
+const server = express()
+// Vamos precisar do body-parser para fazer o parsing do body das requisições da API
+server.use(bodyParser.urlencoded({ extended: true }))
+server.use(bodyParser.json())
+server.listen(port, () => { console.log(`BACKEND is running on port
+${port}.` )})
+require('./config/routes')(server)
+
+
+
 const { response } = require('express');
 var express = require('express');
 var router = express.Router();
@@ -122,7 +139,7 @@ router.post('/home', async function (req, res) {
     };
 
     await axios.request(options).then(function (response) {
-        //console.log(response.data);
+        console.log(response.data);
 
         var produtos = response.data.products
 
@@ -269,7 +286,7 @@ router.post('/produto', function (req, res) {
 
     axios.request(options).then(function (response) {
         var produto = response.data.product
-        //console.log(response.data.product);
+        console.log(response.data.product);
         
 
     
@@ -301,7 +318,7 @@ router.post('/produto', function (req, res) {
   
 
 
-    //console.log("-----------", json_produto)
+    console.log("-----------", json_produto)
 
     res.json(json_produto);
     res.end();
