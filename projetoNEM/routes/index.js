@@ -3,6 +3,7 @@ if(process.env.NODE_ENV !== 'production') {
  require('dotenv').config();
 }
 const bodyParser = require('body-parser')
+var express = require('express');
 
 const port = process.env.PORT || 3000
 const server = express()
@@ -16,7 +17,7 @@ require('./config/routes')(server)
 
 
 const { response } = require('express');
-var express = require('express');
+
 var router = express.Router();
 
 // "bf088c4c77msh95f3011b4369a45p1ac6f0jsn58e57241eca0"
